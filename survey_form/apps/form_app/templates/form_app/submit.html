@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Submit</title>
+</head>
+
+<body>
+
+    <p>Thanks for submitting thos form! You have submitted this form {{ request.session.counter }} times now.</p>
+
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td> {{ name }}</td>
+            </tr>
+
+            <tr>
+                <td>Dojo Location:</td>
+                <td> {{ location }}</td>
+            </tr>
+
+            <tr>
+                <td>Favorite Language:</td>
+                <td>{{ language }}</td>
+            </tr>
+
+            <tr>
+                <td>comment:</td>
+                <td>{{ comment }}</td>
+            </tr>
+        </table>
+        <form action='/' method='POST'>
+                {% csrf_token %} 
+                <button>Go back</button>
+        </form>
+
+</body>
+
+</html>
