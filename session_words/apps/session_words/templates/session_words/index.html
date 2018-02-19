@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Session words</title>
+</head>
+<body>
+    <h1>Add a new word</h1>
+    <form action='/' method='Post'>
+        {% csrf_token %}
+        <input type='text' name='words'>
+        <br>
+        <p>Choose color</p>
+        <input type="radio" name="color" value="red">
+        <label for="red">Red</label><br>
+        <input type="radio"  name="color" value="green">
+        <label for="green">Green</label><br>
+        <input type="radio"  name="color" value="blue">
+        <label for="blue">blue</label>
+        <br>
+        <input type="checkbox" name="bold" value="bold">show in BIG fonts!
+        <br>
+        <input type="submit" value="add to session">
+    </form>
+
+<hr>
+    <div>
+    <form action='/' method='POST'>
+        {% csrf_token %}
+        <input type="submit" value="Clear Session">
+    </form>
+    </div>
+
+
+</body>
+</html>
