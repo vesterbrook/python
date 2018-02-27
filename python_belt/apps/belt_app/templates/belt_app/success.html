@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Appointments</title>
+</head>
+
+<body>
+
+    <h1>Welcome, {{ user.first }}!</h1>
+    <h2 color="green">Here are your appointments for today, !</h2>
+    <!-- {{ currentdate }} -->
+
+    <table>
+        <tr>
+            <th>Tasks</th>
+            <th>Time</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        <tr>
+            {% for appoint in appoint %}
+
+            <td> {{ appoint.apptask }} </td>
+            <td>{{ appoint.apptime }}</td>
+            <td>{{ appoint.appdate }}</td>
+            <td>{{ appoint.appstatus }}</td>
+            <td>
+            {% if not appoint.appstatus == 'pending' %}
+            <td><p>...</p></td>
+            {% else %}
+                <td><a href="/edit/{{ appoint.id }}">Edit</a>
+                <a href="/destroy/{{ appoint.id }}">Delete</a>
+            </td>
+
+            {% endif %}
+
+        </tr>
+        {% endfor %}
+
+    </table>
+    <br>
+    <br>
+    <br>
+    <h2>Future appointments!</h2>
+    <table>
+        <tr>
+            <th>Tasks</th>
+            <th>Time</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        <tr>
+            {% for appoint1 in appoint1 %}
+
+            <td> {{ appoint1.apptask }} </td>
+            <td>{{ appoint1.apptime }}</td>
+            <td>{{ appoint1.appdate }}</td>
+            <td>{{ appoint1.appstatus }}</td>
+            <td>
+                {% if not appoint1.appstatus == 'pending' %}
+                <td>
+                    <p>...</p>
+                </td>
+                {% else %}
+                <a href="/edit/{{ appoint1.id }}">Edit</a>
+                <a href="/destroy/{{ appoint1.id }}">Delete</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+
+    </table>
+    <h2>Add new appointment</h2>
+    <form action='create' method='POST'>
+        {% csrf_token %} Date:
+        <input type="date" name="appdate" min="2018-02-26"> Time:
+        <input type="time" name="apptime" value="{{ appoint.apptime }}"> Tasks:
+        <input type="text" name="apptask" value="{{ appoint.apptask }}">
+        <br>
+
+        <button>add</button>
+
+    </form>
+
+
+
+
+
+    <form action="/logout" method="post">
+        {% csrf_token %}
+        <button>LOG OUT</button>
+    </form>
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+</body>
+
+</html>

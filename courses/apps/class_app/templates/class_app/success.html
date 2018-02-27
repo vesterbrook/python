@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Appointments</title>
+</head>
+
+<body>
+
+
+
+    <!-- {{ currentdate }} -->
+
+    <h1>Welcome, {{ user.first }}!</h1>
+    <h2>Add new course</h2>
+    <form action='create' method='POST'>
+        {% csrf_token %} Name:
+        <input type="text" name="courseName" value="{{ course.courseName }}"><br> Description:
+        <textarea name="description"></textarea>
+        <br>
+
+        <button>add</button>
+
+    </form>
+
+    <table>
+        <tr>
+            <th>Course Name</th>
+            <th>Description</th>
+            <th>Date Added</th>
+
+            <th>Actions</th>
+            <th>Favorite</th>
+        </tr>
+        <tr>
+            {% for course in courses %}
+
+            <td> {{ course.courseName }} </td>
+            <td>{{ course.description }}</td>
+            <td>{{ course.created_at }}</td>
+
+            <td>
+                {% if not user.id == course.creator_id %}
+                <td>
+                    <p>...</p>
+                </td>
+                {% else %}
+
+                <a href="/delete/{{ course.id }}">remove</a>
+            </td>
+
+            {% endif %}
+            <td><a href='favorite/{{ course.id }}'>&hearts;</a></td>
+
+        </tr>
+        {% endfor %}
+
+    </table>
+    <br>
+    <br>
+    <br>
+
+
+
+    <h2>Favorite courses</h2>
+    <table>
+        <tr>
+            <th>Course name</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>UNFavorite</th>
+        </tr>
+        <tr>
+            {% for favorite in favorite %}
+
+            <td> {{ favorite.courseName }} </td>
+            <td>{{ favorite.description }}</td>
+            <td>{{ favorite.created_at }}</td>
+            <td>
+              
+            <td>
+                <a href='/unfavorite/{{ favorite.id }}'>&#9760;</a>
+
+                 </td>
+        </tr>
+
+        {% endfor %}
+    </table>
+
+    <form action="/logout" method="post">
+        {% csrf_token %}
+        <button>LOG OUT</button>
+    </form>
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+</body>
+
+</html>

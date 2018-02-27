@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit</title>
+</head>
+
+<body>
+    <h1>Edit appointment {{ appoint.id }}</h1>
+
+    <form action='/update/{{ appoint.id }}' method='POST'>
+        {% csrf_token %} 
+        <br> Status:
+        <select name="appstatus" value='{{ status }}'>
+            <option value="done">done</option>
+            <option value="pending">pending</option>
+            <option value="missed">missed</option>
+
+        </select>
+        Date:
+        <input type="date" name="appdate" min="2018-02-23" value='{{ appoint.appdate|date:"d-m-Y"}}'> Time:
+        <input type="time" name="apptime" value='{{appoint.apptime}}'> Task:
+        <input type='text' name='apptask' value='{{appoint.apptask}}'><br>
+        <button>update</button>
+        
+        <button>Go Back</button>
+
+    </form>
+
+    <form action="/logout" method="post">
+        {% csrf_token %}
+        <button>LOG OUT</button>
+    </form>
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+
+</body>
+
+</html>

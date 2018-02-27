@@ -10,34 +10,40 @@
 
 <body>
 
-    <p>Thanks for submitting thos form! You have submitted this form {{ request.session.counter }} times now.</p>
+    
 
         <table>
             <tr>
-                <td>Name:</td>
+                <th>Id</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+
+            <tr>
+                <td>{{ ID }}</td>
                 <td> {{ name }}</td>
-            </tr>
-
-            <tr>
-                <td>Dojo Location:</td>
-                <td> {{ location }}</td>
-            </tr>
-
-            <tr>
-                <td>Favorite Language:</td>
-                <td>{{ language }}</td>
-            </tr>
-
-            <tr>
-                <td>comment:</td>
-                <td>{{ comment }}</td>
-            </tr>
-        </table>
-        <form action='/' method='POST'>
+                <td>{{ email }}</td>
+                <td>date</td>
+                <td><form action='/' method='POST'>
+                    {% csrf_token %} 
+                    <button>show</button>
+            </form>
+            <form action='/' method='POST'>
                 {% csrf_token %} 
-                <button>Go back</button>
+                <button>edit</button>
         </form>
+        <form action='/' method='POST'>
+            {% csrf_token %} 
+            <button>delete</button>
+            
+    </form>
+            </td>
+            </tr>
 
+         
+    
 </body>
 
 </html>
