@@ -33,6 +33,7 @@ def show(request, id):
     user = User.objects.get(id=id) #QUERY to get the id of the specific person to be displayed
     context = {
         'user': user
+        
      } #Dictionary containing user information for use in this template/view
     return render(request, 'user_app/show.html', context) #Renders a template and CONTEXT is stated here because you want to pass that info onto the template
 
@@ -51,28 +52,31 @@ def create(request):
             last_name = request.POST['last_name'],
             email = request.POST['email']
         )
-        return redirect('/users')
+        return redirect('/')
 
 
 
-def destroy(request):
+def destroy(request, id):
+    print "delete is working"
+    user = User.objects.filter(id=id)
+    user.delete()
+    return redirect('/')
 
-    return redirect(request, 'user_app/index.html')
-
-def update(request):
+def update(request, id):
     errors = User.objects.basic_validator(request.POST)
     if len(errors):
         for error in errors.iteritems():
             messages.error(request, error)
-        return redirect('/user/edit/'.format(id))
+        return redirect('edit/'.format(id))
     else:
-        user = User.objects.get(id = id)
+        user = User.objects.get(id=id)
         user.first_name = request.POST['first_name']
         user.last_name = request.POST['last_name']
         user.email = request.POST['email']
+        user.save()
         
     
-    return redirect(request,'user_app/show.html')
+        return redirect('/show/'+id)
 
 
 

@@ -13,17 +13,26 @@
 
     <p>Full Name: {{ user.first_name }} {{ user.last_name }}
         <br> Email: {{ user.email }}
-        <br> Created at: {{ user.date }}
+        <br> Created at: {{ user.created_at }}
         <br>
 
     </p>
 
-    <form action='/' method='POST'>
+    <form action='/edit/{{ user.id }}' method='POST'>
         {% csrf_token %}
         <button>Edit</button>
-        <button>Delete</button>
+        
     </form>
-
+    <form action='/destroy/{{ user.id }}' method='POST'>
+        {% csrf_token %}
+        <button>Delete</button>
+        
+    </form>
+    <form action='/' method='POST'>
+        {% csrf_token %}
+        <button>Home</button>
+        
+    </form>
 
 </body>
 
